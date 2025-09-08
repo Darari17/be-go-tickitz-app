@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Darari17/be-go-tickitz-app/internal/models"
@@ -28,12 +29,14 @@ func NewAuthHandler(authRepo *repositories.AuthRepo) *AuthHandler {
 func (ah *AuthHandler) Login(ctx *gin.Context) {
 	var body models.LoginRequest
 	if err := ctx.ShouldBindJSON(&body); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body"})
 		return
 	}
 
 	user, err := ah.authRepo.Login(ctx, body.Email)
 	if err != nil || user == nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "invalid email or password"})
 		return
 	}
@@ -41,6 +44,7 @@ func (ah *AuthHandler) Login(ctx *gin.Context) {
 	var hash pkg.HashConfig
 	valid, err := hash.CompareHashAndPassword(body.Password, user.Password)
 	if err != nil || !valid {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "invalid email or password"})
 		return
 	}
@@ -49,6 +53,7 @@ func (ah *AuthHandler) Login(ctx *gin.Context) {
 
 	token, err := claim.GenToken()
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to generate token"})
 		return
 	}

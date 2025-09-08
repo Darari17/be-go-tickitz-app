@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -26,6 +27,7 @@ func NewMovieHandler(movieRepo *repositories.MovieRepo) *MovieHandler {
 func (mh *MovieHandler) GetUpcomingMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetUpcomingMovies(ctx)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch upcoming movies"})
 		return
 	}
@@ -41,6 +43,7 @@ func (mh *MovieHandler) GetUpcomingMovies(ctx *gin.Context) {
 func (mh *MovieHandler) GetPopularMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetPopularMovies(ctx)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch popular movies"})
 		return
 	}
@@ -64,6 +67,7 @@ func (mh *MovieHandler) GetMoviesWithPagination(ctx *gin.Context) {
 
 	movies, err := mh.movieRepo.GetMoviesWithPagination(ctx, limit, offset)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch movies"})
 		return
 	}
@@ -81,12 +85,14 @@ func (mh *MovieHandler) GetSchedule(ctx *gin.Context) {
 	movieIDStr := ctx.Param("id")
 	movieID, err := strconv.Atoi(movieIDStr)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid movie id"})
 		return
 	}
 
 	schedules, err := mh.movieRepo.GetSchedule(ctx, movieID)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch schedule"})
 		return
 	}
@@ -104,12 +110,14 @@ func (mh *MovieHandler) GetAvailableSeats(ctx *gin.Context) {
 	scheduleIDStr := ctx.Param("schedule_id")
 	scheduleID, err := strconv.Atoi(scheduleIDStr)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid schedule id"})
 		return
 	}
 
 	seats, err := mh.movieRepo.GetAvailableSeats(ctx, scheduleID)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch available seats"})
 		return
 	}
@@ -127,12 +135,14 @@ func (mh *MovieHandler) GetMovieDetail(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid movie id"})
 		return
 	}
 
 	movie, err := mh.movieRepo.GetMovieDetail(ctx, id)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "movie not found"})
 		return
 	}
@@ -149,6 +159,7 @@ func (mh *MovieHandler) GetMovieDetail(ctx *gin.Context) {
 func (mh *MovieHandler) GetAllMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetAllMovies(ctx)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch movies"})
 		return
 	}
@@ -166,11 +177,13 @@ func (mh *MovieHandler) DeleteMovie(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid movie id"})
 		return
 	}
 
 	if err := mh.movieRepo.DeleteMovie(ctx, id); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to delete movie"})
 		return
 	}
@@ -192,12 +205,14 @@ func (mh *MovieHandler) UpdateMovie(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid movie id"})
 		return
 	}
 
 	var req models.UpdateMovieRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request", "error": err.Error()})
 		return
 	}
@@ -215,6 +230,7 @@ func (mh *MovieHandler) UpdateMovie(ctx *gin.Context) {
 	}
 
 	if err := mh.movieRepo.UpdateMovie(ctx, movie); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to update movie"})
 		return
 	}

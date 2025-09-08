@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -41,12 +42,14 @@ func NewOrderHandler(orderRepo *repositories.OrderRepo) *OrderHandler {
 func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 	var req models.CreateOrderRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
 		return
 	}
 
 	order, err := oh.orderRepo.CreateOrder(ctx, &req.Order, req.SeatIDs)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to create order"})
 		return
 	}
@@ -65,12 +68,14 @@ func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid order id"})
 		return
 	}
 
 	order, err := oh.orderRepo.GetOrderByID(ctx, id)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "order not found"})
 		return
 	}
@@ -88,12 +93,14 @@ func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 func (oh *OrderHandler) GetOrdersByUser(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid user id"})
 		return
 	}
 
 	orders, err := oh.orderRepo.GetOrdersByUserID(ctx, userID)
 	if err != nil || len(orders) == 0 {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "no orders found"})
 		return
 	}

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Darari17/be-go-tickitz-app/internal/models"
@@ -27,6 +28,7 @@ func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
 	userID := ctx.GetInt("user_id")
 	profile, err := ph.profileRepo.GetProfile(ctx, userID)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "profile not found"})
 		return
 	}
@@ -47,12 +49,14 @@ func (ph *ProfileHandler) UpdateProfile(ctx *gin.Context) {
 
 	var profile models.Profile
 	if err := ctx.ShouldBindJSON(&profile); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
 		return
 	}
 	profile.UserID = userID
 
 	if err := ph.profileRepo.UpdateProfile(ctx, profile); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to update profile"})
 		return
 	}
