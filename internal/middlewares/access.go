@@ -19,7 +19,7 @@ func Access(roles ...string) func(*gin.Context) {
 			})
 			return
 		}
-		user, ok := claims.(pkg.Claims)
+		user, ok := claims.(*pkg.Claims)
 		if !ok {
 			// log.Println("Cannot cast claims into pkg.claims")
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{

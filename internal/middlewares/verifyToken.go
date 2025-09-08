@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -22,28 +23,34 @@ func VerifyToken(ctx *gin.Context) {
 
 	token := strings.TrimPrefix(bearerToken, "Bearer ")
 
-	var claims pkg.Claims
+	claims := &pkg.Claims{}
+
 	if err := claims.VerifyToken(token); err != nil {
-		switch err {
-		case jwt.ErrTokenInvalidIssuer, jwt.ErrTokenExpired:
-			log.Println("JWT Error.\nCause:", err.Error())
+		if strings.Contains(err.Error(), jwt.ErrTokenInvalidIssuer.Error()) {
+			log.Println("JWT Error.\nCause: ", err.Error())
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"success": false,
 				"error":   "Silahkan login kembali",
 			})
 			return
-		default:
-			log.Println("Internal Server Error.\nCause:", err.Error())
-			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+		}
+		if strings.Contains(err.Error(), jwt.ErrTokenExpired.Error()) {
+			log.Println("JWT Error.\nCause: ", err.Error())
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"success": false,
-				"error":   "Internal Server Error",
+				"error":   "Silahkan login kembali",
 			})
 			return
 		}
+		fmt.Println(jwt.ErrTokenExpired)
+		log.Println("Internal Server Error.\nCause: ", err.Error())
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   "Internal Server Error",
+		})
+		return
 	}
 
-	// ctx.Set("user_id", claims.UserId)
-	// ctx.Set("role", claims.Role)
 	ctx.Set("claims", claims)
 	ctx.Next()
 }

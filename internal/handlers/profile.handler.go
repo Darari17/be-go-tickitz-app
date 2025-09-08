@@ -6,6 +6,7 @@ import (
 
 	"github.com/Darari17/be-go-tickitz-app/internal/models"
 	"github.com/Darari17/be-go-tickitz-app/internal/repositories"
+	"github.com/Darari17/be-go-tickitz-app/pkg"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,8 +26,23 @@ func NewProfileHandler(profileRepo *repositories.ProfileRepo) *ProfileHandler {
 // @Produce     json
 // @Router      /profile [get]
 func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
-	userID := ctx.GetInt("user_id")
-	profile, err := ph.profileRepo.GetProfile(ctx, userID)
+	claims, ok := ctx.Get("claims")
+	if !ok {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
+
+	userClaims, ok := claims.(*pkg.Claims)
+	if !ok {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"message": "invalid claims",
+		})
+		return
+	}
+
+	profile, err := ph.profileRepo.GetProfile(ctx, userClaims.UserId)
 	if err != nil {
 		log.Println(err.Error())
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "profile not found"})
