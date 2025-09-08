@@ -298,7 +298,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.CreateOrderRequest"
+                            "$ref": "#/definitions/models.CreateOrderExample"
                         }
                     }
                 ],
@@ -409,17 +409,46 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.CreateOrderRequest": {
+        "models.CreateOrderExample": {
             "type": "object",
             "properties": {
                 "order": {
-                    "$ref": "#/definitions/models.Order"
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "example": "farid@mail.com"
+                        },
+                        "fullname": {
+                            "type": "string",
+                            "example": "Farid RD"
+                        },
+                        "payment_id": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "phone": {
+                            "type": "string",
+                            "example": "08123456789"
+                        },
+                        "schedule_id": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "user_id": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
                 },
                 "seat_ids": {
                     "type": "array",
                     "items": {
                         "type": "integer"
-                    }
+                    },
+                    "example": [
+                        1
+                    ]
                 }
             }
         },
@@ -437,53 +466,6 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "example": "password123"
-                }
-            }
-        },
-        "models.Order": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string",
-                    "example": "johndoe@mail.com"
-                },
-                "fullname": {
-                    "type": "string",
-                    "example": "John Doe"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "payment_id": {
-                    "type": "integer",
-                    "example": 2
-                },
-                "phone": {
-                    "type": "string",
-                    "example": "08123456789"
-                },
-                "qr_code": {
-                    "type": "string"
-                },
-                "schedule_id": {
-                    "type": "integer",
-                    "example": 10
-                },
-                "seats": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Seat"
-                    }
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "integer",
-                    "example": 1
                 }
             }
         },
@@ -537,17 +519,6 @@ const docTemplate = `{
                 "role": {
                     "type": "string",
                     "example": "user"
-                }
-            }
-        },
-        "models.Seat": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "seat_code": {
-                    "type": "string"
                 }
             }
         },

@@ -1,9 +1,30 @@
 definitions:
-  models.CreateOrderRequest:
+  models.CreateOrderExample:
     properties:
       order:
-        $ref: '#/definitions/models.Order'
+        properties:
+          email:
+            example: farid@mail.com
+            type: string
+          fullname:
+            example: Farid RD
+            type: string
+          payment_id:
+            example: 1
+            type: integer
+          phone:
+            example: "08123456789"
+            type: string
+          schedule_id:
+            example: 1
+            type: integer
+          user_id:
+            example: 1
+            type: integer
+        type: object
       seat_ids:
+        example:
+        - 1
         items:
           type: integer
         type: array
@@ -19,39 +40,6 @@ definitions:
     required:
     - email
     - password
-    type: object
-  models.Order:
-    properties:
-      created_at:
-        type: string
-      email:
-        example: johndoe@mail.com
-        type: string
-      fullname:
-        example: John Doe
-        type: string
-      id:
-        type: integer
-      payment_id:
-        example: 2
-        type: integer
-      phone:
-        example: "08123456789"
-        type: string
-      qr_code:
-        type: string
-      schedule_id:
-        example: 10
-        type: integer
-      seats:
-        items:
-          $ref: '#/definitions/models.Seat'
-        type: array
-      updated_at:
-        type: string
-      user_id:
-        example: 1
-        type: integer
     type: object
   models.Profile:
     properties:
@@ -90,13 +78,6 @@ definitions:
     required:
     - email
     - password
-    type: object
-  models.Seat:
-    properties:
-      id:
-        type: integer
-      seat_code:
-        type: string
     type: object
   models.UpdateMovieRequest:
     properties:
@@ -321,7 +302,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.CreateOrderRequest'
+          $ref: '#/definitions/models.CreateOrderExample'
       produces:
       - application/json
       responses: {}
