@@ -148,17 +148,7 @@ paths:
       description: Semua data Movie untuk admin
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of all movies
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch movies
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get All Movies (Admin)
       tags:
       - Admin-Movies
@@ -171,22 +161,7 @@ paths:
         name: id
         required: true
         type: integer
-      responses:
-        "200":
-          description: Movie deleted
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid movie ID
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to delete movie
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Delete Movie (Admin)
       tags:
       - Admin-Movies
@@ -208,22 +183,7 @@ paths:
           $ref: '#/definitions/models.UpdateMovieRequest'
       produces:
       - application/json
-      responses:
-        "200":
-          description: Movie updated
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid request
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to update movie
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Update Movie (Admin)
       tags:
       - Admin-Movies
@@ -241,27 +201,7 @@ paths:
           $ref: '#/definitions/models.LoginRequest'
       produces:
       - application/json
-      responses:
-        "200":
-          description: Login berhasil, berisi token dan data user
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid request body
-          schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Invalid email atau password
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to generate token
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Login User
       tags:
       - Auth
@@ -279,27 +219,7 @@ paths:
           $ref: '#/definitions/models.RegisterRequest'
       produces:
       - application/json
-      responses:
-        "201":
-          description: Register berhasil
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid request body
-          schema:
-            additionalProperties: true
-            type: object
-        "409":
-          description: Email already exists
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to create user or profile
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Register User
       tags:
       - Auth
@@ -317,17 +237,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of movies with pagination
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch movies
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Movies with Pagination
       tags:
       - Movies
@@ -342,22 +252,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: Movie detail
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid movie ID
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Movie not found
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Movie Detail
       tags:
       - Movies
@@ -372,22 +267,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of schedules
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid movie ID
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch schedule
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Schedule by Movie ID
       tags:
       - Movies
@@ -396,17 +276,7 @@ paths:
       description: Popular Movies
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of popular movies
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch popular movies
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Popular Movies
       tags:
       - Movies
@@ -421,22 +291,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of available seats
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid schedule ID
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch available seats
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Available Seats
       tags:
       - Movies
@@ -445,17 +300,7 @@ paths:
       description: Upcoming Movies
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of upcoming movies
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch upcoming movies
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Upcoming Movies
       tags:
       - Movies
@@ -473,22 +318,7 @@ paths:
           $ref: '#/definitions/models.CreateOrderRequest'
       produces:
       - application/json
-      responses:
-        "201":
-          description: Order created with details
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid request body
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to create order
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Create a new Order
       tags:
       - Orders
@@ -503,27 +333,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: Order detail
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid order ID
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Order not found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch order
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Order Detail
       tags:
       - Orders
@@ -538,27 +348,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: List of orders
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid user ID
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: No orders found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to fetch orders
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get Order History by User
       tags:
       - Orders
@@ -567,17 +357,7 @@ paths:
       description: Data profil user login
       produces:
       - application/json
-      responses:
-        "200":
-          description: Get Profile Success
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Profile not found
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Get User Profile
       tags:
       - Profile
@@ -594,22 +374,7 @@ paths:
           $ref: '#/definitions/models.Profile'
       produces:
       - application/json
-      responses:
-        "200":
-          description: Profile updated
-          schema:
-            additionalProperties: true
-            type: object
-        "400":
-          description: Invalid request body
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Failed to update profile
-          schema:
-            additionalProperties: true
-            type: object
+      responses: {}
       summary: Update User Profile
       tags:
       - Profile
