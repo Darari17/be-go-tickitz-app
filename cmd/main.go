@@ -11,6 +11,9 @@ import (
 
 // @title 					Backend Golang Tickitz App
 // @version 				1.0
+// @securityDefinitions.apikey BearerToken
+// @in header
+// @name Authorization
 // @description			RESTful API created using gin for BE GO Tickitz App
 // @host						localhost:8080
 // @basePath				/
