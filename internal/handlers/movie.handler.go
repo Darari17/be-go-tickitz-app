@@ -51,27 +51,42 @@ func (mh *MovieHandler) GetPopularMovies(ctx *gin.Context) {
 }
 
 // GetMoviesWithPagination godoc
-// @Summary     Get Movies with Pagination
-// @Description Movie lists pagination (default limit: 10, offset: 0)
+// @Summary     Get Movies with Pagination and Search
+// @Description Ambil daftar film dengan pagination dan pencarian berdasarkan judul
 // @Tags        Movies
 // @Produce     json
-// @Param       limit  query int false "Jumlah data per halaman (Default: 10)"
-// @Param       offset query int false "Offset data (Default: 0)"
+// @Param       page      query int    false "Halaman (Default: 1)"
+// @Param       pagesize  query int    false "Jumlah data per halaman (Default: 10)"
+// @Param       search    query string false "Cari berdasarkan judul film"
 // @Router      /movies [get]
 func (mh *MovieHandler) GetMoviesWithPagination(ctx *gin.Context) {
-	limitStr := ctx.DefaultQuery("limit", "10")
-	offsetStr := ctx.DefaultQuery("offset", "0")
+	pageStr := ctx.DefaultQuery("page", "1")
+	pageSizeStr := ctx.DefaultQuery("pageSize", "10")
+	search := ctx.DefaultQuery("search", "")
 
-	limit, _ := strconv.Atoi(limitStr)
-	offset, _ := strconv.Atoi(offsetStr)
+	page, _ := strconv.Atoi(pageStr)
+	pageSize, _ := strconv.Atoi(pageSizeStr)
 
-	movies, err := mh.movieRepo.GetMoviesWithPagination(ctx, limit, offset)
+	if page < 1 {
+		page = 1
+	}
+	if pageSize < 1 {
+		pageSize = 10
+	}
+
+	movies, err := mh.movieRepo.GetMoviesWithPagination(ctx, page, pageSize, search)
 	if err != nil {
 		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to fetch movies"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": movies})
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"page":     page,
+		"pageSize": pageSize,
+		"search":   search,
+		"data":     movies,
+	})
 }
 
 // GetSchedule godoc

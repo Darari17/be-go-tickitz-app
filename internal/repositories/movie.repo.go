@@ -133,16 +133,20 @@ func (mr *MovieRepo) GetPopularMovies(ctx context.Context) ([]models.Movie, erro
 	return movies, nil
 }
 
-func (mr *MovieRepo) GetMoviesWithPagination(ctx context.Context, limit, offset int) ([]models.Movie, error) {
+func (mr *MovieRepo) GetMoviesWithPagination(ctx context.Context, page, pageSize int, search string) ([]models.Movie, error) {
+	offset := (page - 1) * pageSize
+
 	sql := `
 		SELECT id, backdrop_path, overview, popularity, poster_path,
 		       release_date, duration, title, director_name,
 		       created_at, updated_at
 		FROM movies
+		WHERE LOWER(title) LIKE LOWER($1)
 		ORDER BY id ASC
-		LIMIT $1 OFFSET $2
+		LIMIT $2 OFFSET $3
 	`
-	rows, err := mr.db.Query(ctx, sql, limit, offset)
+
+	rows, err := mr.db.Query(ctx, sql, "%"+search+"%", pageSize, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -164,6 +168,7 @@ func (mr *MovieRepo) GetMoviesWithPagination(ctx context.Context, limit, offset 
 
 		movies = append(movies, m)
 	}
+
 	return movies, nil
 }
 
