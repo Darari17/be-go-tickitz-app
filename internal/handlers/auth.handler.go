@@ -82,6 +82,7 @@ func (ah *AuthHandler) Login(ctx *gin.Context) {
 func (ah *AuthHandler) Register(ctx *gin.Context) {
 	var body models.RegisterRequest
 	if err := ctx.ShouldBindJSON(&body); err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body"})
 		return
 	}
@@ -90,6 +91,7 @@ func (ah *AuthHandler) Register(ctx *gin.Context) {
 	hash.UseRecommended()
 	hashed, err := hash.GenHash(body.Password)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to hash password"})
 		return
 	}
@@ -107,6 +109,7 @@ func (ah *AuthHandler) Register(ctx *gin.Context) {
 
 	newUser, err := ah.authRepo.RegisterUser(ctx, &user)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusConflict, gin.H{"message": "email already exists"})
 		return
 	}
@@ -120,6 +123,7 @@ func (ah *AuthHandler) Register(ctx *gin.Context) {
 
 	newProfile, err := ah.authRepo.CreateProfile(ctx, &profile)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to create profile"})
 		return
 	}
