@@ -20,6 +20,7 @@ func NewProfileHandler(profileRepo *repositories.ProfileRepo) *ProfileHandler {
 // @Summary     Get User Profile
 // @Description Data profil user login
 // @Tags        Profile
+// @Security    BearerToken
 // @Produce     json
 // @Router      /profile [get]
 func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
@@ -36,6 +37,7 @@ func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
 // @Summary     Update User Profile
 // @Description Update data profil user yang sedang login
 // @Tags        Profile
+// @Security    BearerToken
 // @Accept      json
 // @Produce     json
 // @Param       body body models.Profile true "Profile data"

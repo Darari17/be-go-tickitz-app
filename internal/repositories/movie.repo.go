@@ -139,7 +139,7 @@ func (mr *MovieRepo) GetMoviesWithPagination(ctx context.Context, limit, offset 
 		       release_date, duration, title, director_name,
 		       created_at, updated_at
 		FROM movies
-		ORDER BY created_at DESC
+		ORDER BY id ASC
 		LIMIT $1 OFFSET $2
 	`
 	rows, err := mr.db.Query(ctx, sql, limit, offset)

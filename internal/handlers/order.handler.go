@@ -21,6 +21,7 @@ func NewOrderHandler(orderRepo *repositories.OrderRepo) *OrderHandler {
 // @Summary     Create a new Order
 // @Description Buat pesanan baru
 // @Tags        Orders
+// @Security    BearerToken
 // @Accept      json
 // @Produce     json
 //
@@ -57,6 +58,7 @@ func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 // @Summary     Get Order Detail
 // @Description Detail pesanan berdasarkan Order ID
 // @Tags        Orders
+// @Security    BearerToken
 // @Produce     json
 // @Param       id path int true "Order ID"
 // @Router      /orders/{id} [get]
@@ -79,6 +81,7 @@ func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 // @Summary     Get Order History by User
 // @Description Semua order milik user berdasarkan User ID
 // @Tags        Orders
+// @Security    BearerToken
 // @Produce     json
 // @Param       user_id path int true "User ID"
 // @Router      /orders/user/{user_id} [get]

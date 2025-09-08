@@ -143,6 +143,7 @@ func (mh *MovieHandler) GetMovieDetail(ctx *gin.Context) {
 // @Summary     Get All Movies (Admin)
 // @Description Semua data Movie untuk admin
 // @Tags        Admin-Movies
+// @Security    BearerToken
 // @Produce     json
 // @Router      /admin/movies [get]
 func (mh *MovieHandler) GetAllMovies(ctx *gin.Context) {
@@ -158,6 +159,7 @@ func (mh *MovieHandler) GetAllMovies(ctx *gin.Context) {
 // @Summary     Delete Movie (Admin)
 // @Description Hapus movie berdasarkan ID
 // @Tags        Admin-Movies
+// @Security    BearerToken
 // @Param       id path int true "Movie ID"
 // @Router      /admin/movies/{id} [delete]
 func (mh *MovieHandler) DeleteMovie(ctx *gin.Context) {
@@ -180,6 +182,7 @@ func (mh *MovieHandler) DeleteMovie(ctx *gin.Context) {
 // @Summary     Update Movie (Admin)
 // @Description Update data movie berdasarkan ID
 // @Tags        Admin-Movies
+// @Security    BearerToken
 // @Accept      json
 // @Produce     json
 // @Param       id path int true "Movie ID"
