@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/admin/movies": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Semua data Movie untuk admin",
                 "produces": [
                     "application/json"
@@ -30,6 +35,11 @@ const docTemplate = `{
         },
         "/admin/movies/{id}": {
             "put": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Update data movie berdasarkan ID",
                 "consumes": [
                     "application/json"
@@ -62,6 +72,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Hapus movie berdasarkan ID",
                 "tags": [
                     "Admin-Movies"
@@ -254,6 +269,11 @@ const docTemplate = `{
         },
         "/orders": {
             "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Buat pesanan baru",
                 "consumes": [
                     "application/json"
@@ -281,6 +301,11 @@ const docTemplate = `{
         },
         "/orders/user/{user_id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Semua order milik user berdasarkan User ID",
                 "produces": [
                     "application/json"
@@ -303,6 +328,11 @@ const docTemplate = `{
         },
         "/orders/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Detail pesanan berdasarkan Order ID",
                 "produces": [
                     "application/json"
@@ -325,6 +355,11 @@ const docTemplate = `{
         },
         "/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Data profil user login",
                 "produces": [
                     "application/json"
@@ -336,6 +371,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Update data profil user yang sedang login",
                 "consumes": [
                     "application/json"
@@ -553,17 +593,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerToken": {
+            "description": "RESTful API created using gin for BE GO Tickitz App",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Backend Golang Tickitz App",
-	Description:      "RESTful API created using gin for BE GO Tickitz App",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

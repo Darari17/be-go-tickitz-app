@@ -1,16 +1,18 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "RESTful API created using gin for BE GO Tickitz App",
         "title": "Backend Golang Tickitz App",
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
-    "basePath": "/",
     "paths": {
         "/admin/movies": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Semua data Movie untuk admin",
                 "produces": [
                     "application/json"
@@ -24,6 +26,11 @@
         },
         "/admin/movies/{id}": {
             "put": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Update data movie berdasarkan ID",
                 "consumes": [
                     "application/json"
@@ -56,6 +63,11 @@
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Hapus movie berdasarkan ID",
                 "tags": [
                     "Admin-Movies"
@@ -248,6 +260,11 @@
         },
         "/orders": {
             "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Buat pesanan baru",
                 "consumes": [
                     "application/json"
@@ -275,6 +292,11 @@
         },
         "/orders/user/{user_id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Semua order milik user berdasarkan User ID",
                 "produces": [
                     "application/json"
@@ -297,6 +319,11 @@
         },
         "/orders/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Detail pesanan berdasarkan Order ID",
                 "produces": [
                     "application/json"
@@ -319,6 +346,11 @@
         },
         "/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Data profil user login",
                 "produces": [
                     "application/json"
@@ -330,6 +362,11 @@
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Update data profil user yang sedang login",
                 "consumes": [
                     "application/json"
@@ -546,6 +583,14 @@
                     "example": "Avengers: Endgame"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerToken": {
+            "description": "RESTful API created using gin for BE GO Tickitz App",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

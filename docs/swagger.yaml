@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   models.CreateOrderRequest:
     properties:
@@ -136,10 +135,8 @@ definitions:
     - release_date
     - title
     type: object
-host: localhost:8080
 info:
   contact: {}
-  description: RESTful API created using gin for BE GO Tickitz App
   title: Backend Golang Tickitz App
   version: "1.0"
 paths:
@@ -149,6 +146,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Get All Movies (Admin)
       tags:
       - Admin-Movies
@@ -162,6 +161,8 @@ paths:
         required: true
         type: integer
       responses: {}
+      security:
+      - BearerToken: []
       summary: Delete Movie (Admin)
       tags:
       - Admin-Movies
@@ -184,6 +185,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Update Movie (Admin)
       tags:
       - Admin-Movies
@@ -319,6 +322,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Create a new Order
       tags:
       - Orders
@@ -334,6 +339,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Get Order Detail
       tags:
       - Orders
@@ -349,6 +356,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Get Order History by User
       tags:
       - Orders
@@ -358,6 +367,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Get User Profile
       tags:
       - Profile
@@ -375,7 +386,15 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - BearerToken: []
       summary: Update User Profile
       tags:
       - Profile
+securityDefinitions:
+  BearerToken:
+    description: RESTful API created using gin for BE GO Tickitz App
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
