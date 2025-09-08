@@ -21,8 +21,6 @@ func NewProfileHandler(profileRepo *repositories.ProfileRepo) *ProfileHandler {
 // @Description Data profil user login
 // @Tags        Profile
 // @Produce     json
-// @Success     200 {object} map[string]interface{} "Get Profile Success"
-// @Failure     404 {object} map[string]interface{} "Profile not found"
 // @Router      /profile [get]
 func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
 	userID := ctx.GetInt("user_id")
@@ -41,9 +39,6 @@ func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
 // @Accept      json
 // @Produce     json
 // @Param       body body models.Profile true "Profile data"
-// @Success     200 {object} map[string]interface{} "Profile updated"
-// @Failure     400 {object} map[string]interface{} "Invalid request body"
-// @Failure     500 {object} map[string]interface{} "Failed to update profile"
 // @Router      /profile [put]
 func (ph *ProfileHandler) UpdateProfile(ctx *gin.Context) {
 	userID := ctx.GetInt("user_id")

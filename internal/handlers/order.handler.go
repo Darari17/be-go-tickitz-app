@@ -36,9 +36,6 @@ func NewOrderHandler(orderRepo *repositories.OrderRepo) *OrderHandler {
 //		  "seat_ids": [1, 2, 3]
 //		})
 //
-// @Success     201 {object} map[string]interface{} "Order created with details"
-// @Failure     400 {object} map[string]interface{} "Invalid request body"
-// @Failure     500 {object} map[string]interface{} "Failed to create order"
 // @Router      /orders [post]
 func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 	var req models.CreateOrderRequest
@@ -62,10 +59,6 @@ func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 // @Tags        Orders
 // @Produce     json
 // @Param       id path int true "Order ID"
-// @Success     200 {object} map[string]interface{} "Order detail"
-// @Failure     400 {object} map[string]interface{} "Invalid order ID"
-// @Failure     404 {object} map[string]interface{} "Order not found"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch order"
 // @Router      /orders/{id} [get]
 func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
@@ -88,10 +81,6 @@ func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 // @Tags        Orders
 // @Produce     json
 // @Param       user_id path int true "User ID"
-// @Success     200 {object} map[string]interface{} "List of orders"
-// @Failure     400 {object} map[string]interface{} "Invalid user ID"
-// @Failure     404 {object} map[string]interface{} "No orders found"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch orders"
 // @Router      /orders/user/{user_id} [get]
 func (oh *OrderHandler) GetOrdersByUser(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))

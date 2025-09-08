@@ -24,10 +24,6 @@ func NewAuthHandler(authRepo *repositories.AuthRepo) *AuthHandler {
 // @Accept      json
 // @Produce     json
 // @Param       body body models.LoginRequest true "Login Request"
-// @Success     200 {object} map[string]interface{} "Login berhasil, berisi token dan data user"
-// @Failure     400 {object} map[string]interface{} "Invalid request body"
-// @Failure     401 {object} map[string]interface{} "Invalid email atau password"
-// @Failure     500 {object} map[string]interface{} "Failed to generate token"
 // @Router      /auth/login [post]
 func (ah *AuthHandler) Login(ctx *gin.Context) {
 	var body models.LoginRequest
@@ -77,10 +73,6 @@ func (ah *AuthHandler) Login(ctx *gin.Context) {
 // @Accept      json
 // @Produce     json
 // @Param       body body models.RegisterRequest true "Register Request"
-// @Success     201 {object} map[string]interface{} "Register berhasil"
-// @Failure     400 {object} map[string]interface{} "Invalid request body"
-// @Failure     409 {object} map[string]interface{} "Email already exists"
-// @Failure     500 {object} map[string]interface{} "Failed to create user or profile"
 // @Router      /auth/register [post]
 func (ah *AuthHandler) Register(ctx *gin.Context) {
 	var body models.RegisterRequest

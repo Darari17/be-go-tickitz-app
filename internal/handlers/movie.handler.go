@@ -22,8 +22,6 @@ func NewMovieHandler(movieRepo *repositories.MovieRepo) *MovieHandler {
 // @Description Upcoming Movies
 // @Tags        Movies
 // @Produce     json
-// @Success     200 {object} map[string]interface{} "List of upcoming movies"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch upcoming movies"
 // @Router      /movies/upcoming [get]
 func (mh *MovieHandler) GetUpcomingMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetUpcomingMovies(ctx)
@@ -39,8 +37,6 @@ func (mh *MovieHandler) GetUpcomingMovies(ctx *gin.Context) {
 // @Description Popular Movies
 // @Tags        Movies
 // @Produce     json
-// @Success     200 {object} map[string]interface{} "List of popular movies"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch popular movies"
 // @Router      /movies/popular [get]
 func (mh *MovieHandler) GetPopularMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetPopularMovies(ctx)
@@ -58,8 +54,6 @@ func (mh *MovieHandler) GetPopularMovies(ctx *gin.Context) {
 // @Produce     json
 // @Param       limit  query int false "Jumlah data per halaman (Default: 10)"
 // @Param       offset query int false "Offset data (Default: 0)"
-// @Success     200 {object} map[string]interface{} "List of movies with pagination"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch movies"
 // @Router      /movies [get]
 func (mh *MovieHandler) GetMoviesWithPagination(ctx *gin.Context) {
 	limitStr := ctx.DefaultQuery("limit", "10")
@@ -82,9 +76,6 @@ func (mh *MovieHandler) GetMoviesWithPagination(ctx *gin.Context) {
 // @Tags        Movies
 // @Produce     json
 // @Param       id path int true "Movie ID"
-// @Success     200 {object} map[string]interface{} "List of schedules"
-// @Failure     400 {object} map[string]interface{} "Invalid movie ID"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch schedule"
 // @Router      /movies/{id}/schedules [get]
 func (mh *MovieHandler) GetSchedule(ctx *gin.Context) {
 	movieIDStr := ctx.Param("id")
@@ -108,9 +99,6 @@ func (mh *MovieHandler) GetSchedule(ctx *gin.Context) {
 // @Tags        Movies
 // @Produce     json
 // @Param       schedule_id path int true "Schedule ID"
-// @Success     200 {object} map[string]interface{} "List of available seats"
-// @Failure     400 {object} map[string]interface{} "Invalid schedule ID"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch available seats"
 // @Router      /movies/schedules/{schedule_id}/seats [get]
 func (mh *MovieHandler) GetAvailableSeats(ctx *gin.Context) {
 	scheduleIDStr := ctx.Param("schedule_id")
@@ -134,9 +122,6 @@ func (mh *MovieHandler) GetAvailableSeats(ctx *gin.Context) {
 // @Tags        Movies
 // @Produce     json
 // @Param       id path int true "Movie ID"
-// @Success     200 {object} map[string]interface{} "Movie detail"
-// @Failure     400 {object} map[string]interface{} "Invalid movie ID"
-// @Failure     404 {object} map[string]interface{} "Movie not found"
 // @Router      /movies/{id} [get]
 func (mh *MovieHandler) GetMovieDetail(ctx *gin.Context) {
 	idStr := ctx.Param("id")
@@ -159,8 +144,6 @@ func (mh *MovieHandler) GetMovieDetail(ctx *gin.Context) {
 // @Description Semua data Movie untuk admin
 // @Tags        Admin-Movies
 // @Produce     json
-// @Success     200 {object} map[string]interface{} "List of all movies"
-// @Failure     500 {object} map[string]interface{} "Failed to fetch movies"
 // @Router      /admin/movies [get]
 func (mh *MovieHandler) GetAllMovies(ctx *gin.Context) {
 	movies, err := mh.movieRepo.GetAllMovies(ctx)
@@ -176,9 +159,6 @@ func (mh *MovieHandler) GetAllMovies(ctx *gin.Context) {
 // @Description Hapus movie berdasarkan ID
 // @Tags        Admin-Movies
 // @Param       id path int true "Movie ID"
-// @Success     200 {object} map[string]interface{} "Movie deleted"
-// @Failure     400 {object} map[string]interface{} "Invalid movie ID"
-// @Failure     500 {object} map[string]interface{} "Failed to delete movie"
 // @Router      /admin/movies/{id} [delete]
 func (mh *MovieHandler) DeleteMovie(ctx *gin.Context) {
 	idStr := ctx.Param("id")
@@ -204,9 +184,6 @@ func (mh *MovieHandler) DeleteMovie(ctx *gin.Context) {
 // @Produce     json
 // @Param       id path int true "Movie ID"
 // @Param       movie body models.UpdateMovieRequest true "Movie Update Data"
-// @Success     200 {object} map[string]interface{} "Movie updated"
-// @Failure     400 {object} map[string]interface{} "Invalid request"
-// @Failure     500 {object} map[string]interface{} "Failed to update movie"
 // @Router      /admin/movies/{id} [put]
 func (mh *MovieHandler) UpdateMovie(ctx *gin.Context) {
 	idStr := ctx.Param("id")
