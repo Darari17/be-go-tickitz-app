@@ -8,8 +8,8 @@ type Order struct {
 	UserID     int        `db:"users_id" json:"user_id" example:"1"`
 	ScheduleID int        `db:"schedules_id" json:"schedule_id" example:"10"`
 	PaymentID  int        `db:"payments_id" json:"payment_id" example:"2"`
-	FullName   string     `db:"fullname" json:"fullname" example:"John Doe"`
-	Email      string     `db:"email" json:"email" example:"johndoe@mail.com"`
+	FullName   string     `db:"fullname" json:"fullname" example:"farid rd"`
+	Email      string     `db:"email" json:"email" example:"darari@mail.com"`
 	Phone      string     `db:"phone_number" json:"phone" example:"08123456789"`
 	CreatedAt  time.Time  `db:"created_at" json:"created_at"`
 	UpdatedAt  *time.Time `db:"updated_at" json:"updated_at"`
@@ -33,5 +33,17 @@ type PaymentMethod struct {
 
 type CreateOrderRequest struct {
 	Order   Order `json:"order"`
-	SeatIDs []int `json:"seat_ids"`
+	SeatIDs []int `json:"seat_ids" `
+}
+
+type CreateOrderExample struct {
+	Order struct {
+		UserID     int    `json:"user_id" example:"1"`
+		ScheduleID int    `json:"schedule_id" example:"1"`
+		PaymentID  int    `json:"payment_id" example:"1"`
+		FullName   string `json:"fullname" example:"Farid RD"`
+		Email      string `json:"email" example:"farid@mail.com"`
+		Phone      string `json:"phone" example:"08123456789"`
+	} `json:"order"`
+	SeatIDs []int `json:"seat_ids" swaggertype:"array,integer" example:"1"`
 }

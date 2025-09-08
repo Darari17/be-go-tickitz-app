@@ -25,36 +25,49 @@ func NewOrderHandler(orderRepo *repositories.OrderRepo) *OrderHandler {
 // @Security    BearerToken
 // @Accept      json
 // @Produce     json
-//
-//	@Param       body body models.CreateOrderRequest true "Order Request" example({
-//		  "order": {
-//		    "user_id": 1,
-//		    "schedule_id": 10,
-//		    "payment_id": 2,
-//		    "fullname": "John Doe",
-//		    "email": "johndoe@mail.com",
-//		    "phone": "08123456789"
-//		  },
-//		  "seat_ids": [1, 2, 3]
-//		})
-//
+// @Param       body body models.CreateOrderExample true "Order Request"
 // @Router      /orders [post]
 func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 	var req models.CreateOrderRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		log.Println(err.Error())
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "invalid request body",
+		})
 		return
 	}
 
-	order, err := oh.orderRepo.CreateOrder(ctx, &req.Order, req.SeatIDs)
+	if len(req.SeatIDs) == 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "at least one seat must be selected",
+		})
+		return
+	}
+
+	newOrder, err := oh.orderRepo.CreateOrder(ctx.Request.Context(), &req.Order, req.SeatIDs)
 	if err != nil {
-		log.Println(err.Error())
-		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "failed to create order"})
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+		})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"data": order})
+	orderWithSeats, err := oh.orderRepo.GetOrderByID(ctx.Request.Context(), newOrder.ID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "failed to fetch created order",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{
+		"status": "success",
+		"data":   orderWithSeats,
+	})
 }
 
 // GetOrderByID godoc
@@ -69,17 +82,27 @@ func (oh *OrderHandler) GetOrderByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid order id"})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "invalid order id",
+		})
 		return
 	}
 
-	order, err := oh.orderRepo.GetOrderByID(ctx, id)
+	order, err := oh.orderRepo.GetOrderByID(ctx.Request.Context(), id)
 	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "order not found"})
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "order not found",
+		})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": order})
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   order,
+	})
 }
 
 // GetOrdersByUser godoc
@@ -94,15 +117,33 @@ func (oh *OrderHandler) GetOrdersByUser(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid user id"})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "invalid user id",
+		})
 		return
 	}
 
-	orders, err := oh.orderRepo.GetOrdersByUserID(ctx, userID)
-	if err != nil || len(orders) == 0 {
+	orders, err := oh.orderRepo.GetOrdersByUserID(ctx.Request.Context(), userID)
+	if err != nil {
 		log.Println(err.Error())
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "no orders found"})
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "failed to fetch orders",
+		})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": orders})
+
+	if len(orders) == 0 {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "no orders found for this user",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   orders,
+	})
 }

@@ -22,6 +22,10 @@ func (or *OrderRepo) CreateOrder(ctx context.Context, order *models.Order, seatI
 	}
 	defer tx.Rollback(ctx)
 
+	if order.QRCode == "" {
+		order.QRCode = "QR-CODE"
+	}
+
 	query := `
 		INSERT INTO orders (qr_code, users_id, schedules_id, payments_id, fullname, email, phone_number, created_at)
 		VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())
