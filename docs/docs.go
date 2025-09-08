@@ -497,8 +497,7 @@ const docTemplate = `{
                     "example": "089876543210"
                 },
                 "user_id": {
-                    "type": "integer",
-                    "example": 1
+                    "type": "integer"
                 }
             }
         },

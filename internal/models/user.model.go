@@ -20,7 +20,7 @@ type User struct {
 }
 
 type Profile struct {
-	UserID      int     `db:"user_id" json:"user_id" example:"1"`
+	UserID      int     `db:"user_id" json:"user_id"`
 	FirstName   *string `db:"firstname" json:"firstname" example:"Farid"`
 	LastName    *string `db:"lastname" json:"lastname" example:"Darari"`
 	PhoneNumber *string `db:"phone_number" json:"phone_number" example:"089876543210"`
