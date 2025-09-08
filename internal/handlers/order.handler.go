@@ -48,6 +48,7 @@ func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 
 	newOrder, err := oh.orderRepo.CreateOrder(ctx.Request.Context(), &req.Order, req.SeatIDs)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
 			"message": err.Error(),
@@ -57,6 +58,7 @@ func (oh *OrderHandler) CreateOrder(ctx *gin.Context) {
 
 	orderWithSeats, err := oh.orderRepo.GetOrderByID(ctx.Request.Context(), newOrder.ID)
 	if err != nil {
+		log.Println(err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"status":  "error",
 			"message": "failed to fetch created order",
