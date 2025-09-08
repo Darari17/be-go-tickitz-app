@@ -61,7 +61,21 @@ func (ph *ProfileHandler) GetProfile(ctx *gin.Context) {
 // @Param       body body models.Profile true "Profile data"
 // @Router      /profile [put]
 func (ph *ProfileHandler) UpdateProfile(ctx *gin.Context) {
-	userID := ctx.GetInt("user_id")
+	claims, ok := ctx.Get("claims")
+	if !ok {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
+
+	userClaims, ok := claims.(*pkg.Claims)
+	if !ok {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"message": "invalid claims",
+		})
+		return
+	}
 
 	var profile models.Profile
 	if err := ctx.ShouldBindJSON(&profile); err != nil {
@@ -69,7 +83,7 @@ func (ph *ProfileHandler) UpdateProfile(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
 		return
 	}
-	profile.UserID = userID
+	profile.UserID = userClaims.UserId
 
 	if err := ph.profileRepo.UpdateProfile(ctx, profile); err != nil {
 		log.Println(err.Error())
