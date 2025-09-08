@@ -11,10 +11,10 @@ definitions:
   models.LoginRequest:
     properties:
       email:
-        example: user@mail.com
+        example: user1@gmail.com
         type: string
       password:
-        example: "123456"
+        example: password123
         type: string
     required:
     - email
@@ -74,10 +74,10 @@ definitions:
         example: newuser@mail.com
         type: string
       firstname:
-        example: John
+        example: Farid
         type: string
       lastname:
-        example: Doe
+        example: Rhamadhan
         type: string
       password:
         example: mypassword

@@ -426,11 +426,11 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string",
-                    "example": "user@mail.com"
+                    "example": "user1@gmail.com"
                 },
                 "password": {
                     "type": "string",
-                    "example": "123456"
+                    "example": "password123"
                 }
             }
         },
@@ -515,11 +515,11 @@ const docTemplate = `{
                 },
                 "firstname": {
                     "type": "string",
-                    "example": "John"
+                    "example": "Farid"
                 },
                 "lastname": {
                     "type": "string",
-                    "example": "Doe"
+                    "example": "Rhamadhan"
                 },
                 "password": {
                     "type": "string",

@@ -27,15 +27,15 @@ type Profile struct {
 }
 
 type LoginRequest struct {
-	Email    string `json:"email" binding:"required,email" example:"user@mail.com"`
-	Password string `json:"password" binding:"required" example:"123456"`
+	Email    string `json:"email" binding:"required,email" example:"user1@gmail.com"`
+	Password string `json:"password" binding:"required" example:"password123"`
 }
 
 type RegisterRequest struct {
 	Email       string  `json:"email" binding:"required,email" example:"newuser@mail.com"`
 	Password    string  `json:"password" binding:"required" example:"mypassword"`
 	Role        string  `json:"role" example:"user"`
-	FirstName   *string `json:"firstname" example:"John"`
-	LastName    *string `json:"lastname" example:"Doe"`
+	FirstName   *string `json:"firstname" example:"Farid"`
+	LastName    *string `json:"lastname" example:"Rhamadhan"`
 	PhoneNumber *string `json:"phone_number" example:"08123456789"`
 }
