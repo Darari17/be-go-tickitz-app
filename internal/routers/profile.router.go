@@ -9,7 +9,7 @@ import (
 )
 
 func initProfileRouter(router *gin.Engine, db *pgxpool.Pool) {
-	profileGroup := router.Group("/profile", middlewares.VerifyToken)
+	profileGroup := router.Group("/profile", middlewares.VerifyToken, middlewares.Access("user"))
 
 	profileRepo := repositories.NewProfileRepo(db)
 	profileHandler := handlers.NewProfileHandler(profileRepo)

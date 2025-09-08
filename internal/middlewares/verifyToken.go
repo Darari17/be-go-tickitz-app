@@ -42,7 +42,8 @@ func VerifyToken(ctx *gin.Context) {
 		}
 	}
 
-	ctx.Set("user_id", claims.UserId)
-	ctx.Set("role", claims.Role)
+	// ctx.Set("user_id", claims.UserId)
+	// ctx.Set("role", claims.Role)
+	ctx.Set("claims", claims)
 	ctx.Next()
 }
