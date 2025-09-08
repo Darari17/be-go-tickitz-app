@@ -227,20 +227,24 @@ paths:
       - Auth
   /movies:
     get:
-      description: 'Movie lists pagination (default limit: 10, offset: 0)'
+      description: Ambil daftar film dengan pagination dan pencarian berdasarkan judul
       parameters:
+      - description: 'Halaman (Default: 1)'
+        in: query
+        name: page
+        type: integer
       - description: 'Jumlah data per halaman (Default: 10)'
         in: query
-        name: limit
+        name: pagesize
         type: integer
-      - description: 'Offset data (Default: 0)'
+      - description: Cari berdasarkan judul film
         in: query
-        name: offset
-        type: integer
+        name: search
+        type: string
       produces:
       - application/json
       responses: {}
-      summary: Get Movies with Pagination
+      summary: Get Movies with Pagination and Search
       tags:
       - Movies
   /movies/{id}:

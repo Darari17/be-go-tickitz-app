@@ -150,25 +150,31 @@ const docTemplate = `{
         },
         "/movies": {
             "get": {
-                "description": "Movie lists pagination (default limit: 10, offset: 0)",
+                "description": "Ambil daftar film dengan pagination dan pencarian berdasarkan judul",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Movies"
                 ],
-                "summary": "Get Movies with Pagination",
+                "summary": "Get Movies with Pagination and Search",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Jumlah data per halaman (Default: 10)",
-                        "name": "limit",
+                        "description": "Halaman (Default: 1)",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Offset data (Default: 0)",
-                        "name": "offset",
+                        "description": "Jumlah data per halaman (Default: 10)",
+                        "name": "pagesize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Cari berdasarkan judul film",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
